@@ -13,6 +13,20 @@ class DB {
         });
     }
 
+    static getDataById(id){
+        return new Promise((resolve,reject)=>{
+            let xml = new XMLHttpRequest();
+            xml.onreadystatechange = () => {
+                if(xml.readyState ==4 && xml.status == 200){
+                    resolve(xml.responseText);
+                }
+            }
+
+            xml.open('GET', `edit_account.php?id=${id}`);
+            xml.send();
+        })
+    }
+
     static save(newAccount){
         return new Promise((resolve,reject)=>{
             let xml = new XMLHttpRequest();
@@ -28,17 +42,18 @@ class DB {
         });
     }
  
-/*     static delete(id){
+/*      static edit(editedAccount){
         return new Promise((resolve,reject)=>{
             let xml = new XMLHttpRequest();
             xml.onreadystatechange = () => {
                 if(xml.readyState ==4 && xml.status == 200){
-                    console.log(resolve);
+                    resolve(JSON.parse(xml.responseText));
                 }
             }
 
-            xml.open('GET', 'delete_account.php');
-            xml.send();
+            xml.open('GET', 'edit_account.php');
+            xml.setRequestHeader("Content-type","application/json");   
+            xml.send(JSON.stringify(id));
         })
-    }  */
+    }  */ 
 }

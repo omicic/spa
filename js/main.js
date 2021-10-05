@@ -37,13 +37,44 @@ function editAccount(){
 
         let tbodyTrs = document.querySelectorAll('tbody tr');
         tbodyTrs.forEach((tr,index) => {
-            tr.innerHTML += `<td><a href='edit_account.php?id=${data[index].id}' class="btn btn-sm btn-warning">Edit</a>&nbsp;
+            tr.innerHTML += `<td><button id='btn-${data[index].id}' class="btn btn-sm btn-warning">Edit</button>&nbsp;
             <a href='delete_account.php?id=${data[index].id}' class="btn btn-sm btn-danger">Delete</a></td>`;
+
+            document.querySelector(`#btn-${data[index].id}`).addEventListener('click', edit);
         });
+
+        //forma za izmenu
+        
+
 
     },(err)=>{
         console.log(err);
     });
+}
+
+function edit(){
+    console.log(this);
+    let id = this.getAttribute('id').split('-')[1];
+    console.log(id);
+    displayAddView();
+    let naslov = document.querySelector('.naslov');
+    naslov.innerHTML = 'Edit Account';
+
+    DB.getDataById(id).then((data)=>{
+        //console.log(data);
+        account = JSON.parse(data);
+        //console.log(account);
+
+        inputName.value = account.name;
+        inputDeposit.value = account.deposit;
+        inputCreditCard.value = account.credit_card;
+
+    },(err)=>{
+            console.log(err);
+            
+    });
+   
+   
 }
 
 function saveNewAccount(){
