@@ -6,14 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSS only -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
     <title>Account App</title>
 </head>
 <body>
     <div class="jumbotron text-center">
         <h3>Accounts</h3>
+        <button id="accBtn" class="btn btn-primary">Accounts</button>
+        <button id="addBtn" class="btn btn-info">Add Account</button>
+        <button id="editBtn" class="btn btn-warning">Edit/Delete</button>
     </div>
     <div class="container">
-        <div class="row">
+        <div class="row" id="accView">
             <div class="col-10 offset-1">
                 <h4>Accounts</h4>
             </div>
@@ -26,16 +30,43 @@
                         <th>Credit card</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
+                <tbody id="main-body">
+          
                 </tbody>
             </table></div>
         </div>
+
+<!--         <div class="row" id="editView">
+            <div class="col-10 offset-1">
+                <h4>Edit/Delete Accounts</h4>
+            </div>
+            <div class="col-10 offset-1"><table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Deposit</th>
+                        <th>Credit card</th>
+                    </tr>
+                </thead>
+                <tbody id="main-edit-body">
+          
+                </tbody>
+            </table></div>
+        </div> -->
+
+        <div class="row" id="addView">
+            <div class="col-10 offset-1">
+                <h4>Add Account</h4>
+            </div>
+            <div class="col-10 offset-1">
+                <input type="text" name="name" placeholder="Name" class="form-control"><br>
+                <input type="text" name="deposit" placeholder="Deposit" class="form-control"><br>
+                <input type="text" name="credit_card" placeholder="Credit Card" class="form-control"><br>
+                <button id="saveBtn" class="btn btn-primary form-control">Save</button>
+            </div>
+        </div>
+
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
