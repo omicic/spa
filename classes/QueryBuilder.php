@@ -13,7 +13,13 @@ public function __construct($db){
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
-        
+    }
+
+    public function selectDataById($table,$id){
+        $sql = "SELECT * FROM {$table} WHERE id=?";
+        $query = $this->db->prepare($sql);
+        $query->execute([$id]);
+        return $query->fetch(PDO::FETCH_ASSOC);
     }
 
     public function save($data){
@@ -28,9 +34,9 @@ public function __construct($db){
         }
     }
 
-    public function delete($id){
+    public function delete($table,$id){
         //var_dump($id);
-        $sql = "DELETE FROM accounts WHERE id = ?";
+        $sql = "DELETE FROM {$table} WHERE id = ?";
         $query = $this->db->prepare($sql);
         $query->execute([$id]);
 

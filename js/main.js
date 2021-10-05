@@ -37,7 +37,7 @@ function editAccount(){
 
         let tbodyTrs = document.querySelectorAll('tbody tr');
         tbodyTrs.forEach((tr,index) => {
-            tr.innerHTML += `<td><a href='index.php?id=${data[index].id}' class="btn btn-sm btn-warning">Edit</a>&nbsp;
+            tr.innerHTML += `<td><a href='edit_account.php?id=${data[index].id}' class="btn btn-sm btn-warning">Edit</a>&nbsp;
             <a href='delete_account.php?id=${data[index].id}' class="btn btn-sm btn-danger">Delete</a></td>`;
         });
 
