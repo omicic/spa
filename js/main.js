@@ -1,17 +1,20 @@
 
 let mainBody = document.querySelector('#main-body');
+let maineditbody =document.querySelector('#main-edit-body');
+
 let accBtn = document.querySelector('#accBtn');
 let addBtn = document.querySelector('#addBtn');
 let editBtn = document.querySelector('#editBtn');
 let saveBtn = document.querySelector('#saveBtn');
 
-
+let inputId = document.querySelector('[name="id"]');
 let inputName = document.querySelector('[name="name"]');
 let inputDeposit = document.querySelector('[name="deposit"]');
 let inputCreditCard = document.querySelector('[name="credit_card"]');
 
 let accView = document.querySelector('#accView');
 let addView = document.querySelector('#addView');
+let accEditView = document.querySelector('#accEditView');
 let editView = document.querySelector('#editView');
 
 addBtn.addEventListener('click', displayAddView);
@@ -19,29 +22,25 @@ accBtn.addEventListener('click', displayAccView);
 saveBtn.addEventListener('click', saveNewAccount);
 editBtn.addEventListener('click', editAccount);
 
+let editedAccount = false;
 
 DB.getAll().then((data)=>{
     //console.log(data);
     createTable(data);
+    displayAccView();
 },(err)=>{
     console.log(err);
 });
 
 function editAccount(){
     DB.getAll().then((data)=>{
-        createTable(data);
-        displayAccView();
+        createEditedTable(data);
+        displayAccEditView();
 
-        let theadTr = document.querySelector('thead tr');
-        theadTr.innerHTML += `<th>Edit/Delete</th>`;
+      /*   let theadTr = document.querySelector('thead tr');
+        theadTr.innerHTML += `<th>Edit/Delete</th>`; */
 
-        let tbodyTrs = document.querySelectorAll('tbody tr');
-        tbodyTrs.forEach((tr,index) => {
-            tr.innerHTML += `<td><button id='btn-${data[index].id}' class="btn btn-sm btn-warning">Edit</button>&nbsp;
-            <a href='delete_account.php?id=${data[index].id}' class="btn btn-sm btn-danger">Delete</a></td>`;
-
-            document.querySelector(`#btn-${data[index].id}`).addEventListener('click', edit);
-        });
+       
 
         //forma za izmenu
         
@@ -53,18 +52,17 @@ function editAccount(){
 }
 
 function edit(){
-    console.log(this);
+    //console.log(this);
+    editedAccount=true;
     let id = this.getAttribute('id').split('-')[1];
-    console.log(id);
+    //console.log(id);
     displayAddView();
     let naslov = document.querySelector('.naslov');
     naslov.innerHTML = 'Edit Account';
 
     DB.getDataById(id).then((data)=>{
-        //console.log(data);
         account = JSON.parse(data);
-        //console.log(account);
-
+        inputId.value=account.id;
         inputName.value = account.name;
         inputDeposit.value = account.deposit;
         inputCreditCard.value = account.credit_card;
@@ -86,36 +84,72 @@ function saveNewAccount(){
         credit_card:inputCreditCard.value
     }
 
-    DB.save(newAccount).then((res)=>{
-        DB.getAll().then((data)=>{
-            createTable(data);
-            displayAccView();
+   
+    if(!editedAccount){
+        DB.save(newAccount).then((res)=>{
+            DB.getAll().then((data)=>{
+                
+                createTable(data);
+                displayAccView();
+               
+            },(err)=>{
+                console.log(err);
+            });
         },(err)=>{
             console.log(err);
         });
-    },(err)=>{
-        console.log(err);
-    });
+    }else{
+        newAccount['id']=inputId.value;
+    
+        DB.update(newAccount).then((res)=>{
+            DB.getAll().then((data)=>{
+                
+                createTable(data);
+                displayAccView();
+                editedAccount = false;
+               
+            },(err)=>{
+                console.log(err);
+            });
+        },(err)=>{
+            console.log(err);
+        });
+    }
+
+
 }
 
 
 function displayAddView(){
 addView.style.display = 'block';
 accView.style.display = 'none';
-//editView.style.display = 'none';
+accEditView.style.display = 'none';
 
+inputId.value = '';
+inputName.value = '';
+inputDeposit.value = '';
+inputCreditCard.value = '';
+
+}
+
+function displayAccEditView(){
+
+    accEditView.style.display = 'block';
+    accView.style.display = 'none';
+    addView.style.display = 'none';
 }
 
 function displayAccView(){
     accView.style.display = 'block';
     addView.style.display = 'none';
-    //editView.style.display = 'none';
+    accEditView.style.display = 'none';
 }
     
 
 function createTable(data){
-    let text = ``;
-    console.log(data.length);
+
+    mainBody.innerHTML = '';
+    let text = ``;  
     for (let i = 0; i < data.length; i++) {
         text+=`
         <tr>
@@ -129,4 +163,29 @@ function createTable(data){
     }
 
     mainBody.innerHTML = text;
+}
+
+
+function createEditedTable(data){
+
+    maineditbody.innerHTML = '';
+    let text = ``;  
+    for (let i = 0; i < data.length; i++) {
+        text+=`
+        <tr>
+            <td>${data[i].id}</td>
+            <td>${data[i].name}</td>
+            <td>${data[i].deposit}</td>
+            <td>${data[i].credit_card}</td>
+            <td><button id='btn-${data[i].id}' class="btn btn-sm btn-warning">Edit</button>&nbsp;
+            <a href='delete_account.php?id=${data[i].id}' class="btn btn-sm btn-danger">Delete</a></td>
+        </tr>
+        `;  
+    }
+
+    maineditbody.innerHTML = text;
+    for (let i = 0; i < data.length; i++) {
+     document.querySelector(`#btn-${data[i].id}`).addEventListener('click', edit);
+    }
+
 }

@@ -42,18 +42,19 @@ class DB {
         });
     }
  
-/*      static edit(editedAccount){
+      static update(editedAccount){
         return new Promise((resolve,reject)=>{
             let xml = new XMLHttpRequest();
             xml.onreadystatechange = () => {
                 if(xml.readyState ==4 && xml.status == 200){
-                    resolve(JSON.parse(xml.responseText));
+                    resolve(xml.responseText);
                 }
             }
 
-            xml.open('GET', 'edit_account.php');
+            xml.open('POST', 'update_data.php');
             xml.setRequestHeader("Content-type","application/json");   
-            xml.send(JSON.stringify(id));
+           // console.log(editedAccount);
+            xml.send(JSON.stringify(editedAccount));
         })
-    }  */ 
+    }  
 }

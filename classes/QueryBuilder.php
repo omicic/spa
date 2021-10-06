@@ -34,6 +34,20 @@ public function __construct($db){
         }
     }
 
+    public function update_account($data){
+       //var_dump($data);
+        $sql = "UPDATE accounts SET
+                         name=?,deposit=?, credit_card=? WHERE id=?";
+        $query = $this->db->prepare($sql);
+        $query->execute([$data->name,$data->deposit, $data->credit_card, $data->id]);
+
+        if($query){
+            return "success";
+        }else{
+            return "error";
+        } 
+    }
+
     public function delete($table,$id){
         //var_dump($id);
         $sql = "DELETE FROM {$table} WHERE id = ?";
@@ -46,6 +60,7 @@ public function __construct($db){
             return "error";
         }
     }
+
 
 }
 

@@ -36,11 +36,32 @@
             </table></div>
         </div>
 
+        <div class="row" id="accEditView">
+            <div class="col-10 offset-1">
+                <h4>Edit Accounts</h4>
+            </div>
+            <div class="col-10 offset-1"><table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Deposit</th>
+                        <th>Credit card</th>
+                        <th>Edit/Remove</th>
+                    </tr>
+                </thead>
+                <tbody id="main-edit-body">
+          
+                </tbody>
+            </table></div>
+        </div>
+
         <div class="row" id="addView">
             <div class="col-10 offset-1">
                 <h4 class="naslov">Add Account</h4>
             </div>
             <div class="col-10 offset-1">
+                <input type="text" name="id" class="form-control" hidden><br>
                 <input type="text" name="name" placeholder="Name" class="form-control"><br>
                 <input type="text" name="deposit" placeholder="Deposit" class="form-control"><br>
                 <input type="text" name="credit_card" placeholder="Credit Card" class="form-control"><br>
